@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +18,11 @@ func main() {
 			"NoOfDays": getDays(),
 		})
 	})
-	router.Run(":8080")
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "8080"
+	}
+	router.Run(fmt.Sprintf(":%v", port))
 }
 
 func getDays() int {
